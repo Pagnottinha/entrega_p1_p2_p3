@@ -1,0 +1,72 @@
+<codigo> ::= <lista-funcoes>
+
+<lista-funcoes> ::= <declaracao-funcao> <lista-funcoes> | ε
+
+<declaracao-funcao> ::= "<function name='" <identificador> "' return='" <tipo> "'>" <lista-parametros> <lista-comandos> "</function>"
+
+<lista-parametros> ::= "<params>" <parametros> "</params>" | ε
+
+<parametros> ::= <parametro> [ <parametros> ] | ε
+<parametro> ::= "<param type='" <tipo> "'>" <identificador> "</param>"
+
+<lista-comandos> ::= <comando> <lista-comandos> | ε
+
+<comando> ::= <declaracao-variavel>
+            | <atribuicao>
+            | <estrutura-if>
+            | <estrutura-while>
+            | <chamada-funcao>
+            | "<return>" <expressao> "</return>"
+            | "<print>" <expressao> "</print>"
+
+<declaracao-variavel> ::= "<var type='" <tipo> "'>" <identificador> "</var>"
+
+<atribuicao> ::= "<set var='" <identificador> "'>" <expressao> "</set>"
+
+<estrutura-if> ::= "<if cond='" <expressao> "'>" <lista-comandos> "</if>" [ "<else>" <lista-comandos> "</else>" ]
+
+<estrutura-while> ::= "<while cond='" <expressao> "'>" <lista-comandos> "</while>"
+
+<chamada-funcao> ::= "<call name='" <identificador> "'>" <lista-expressoes> "</call>"
+
+<lista-expressoes> ::= <expressao> [ "," <lista-expressoes> ] | ε
+
+<expressao> ::= <exp-logico-ou>
+
+<exp-logico-ou> ::= <exp-logico-e> { "||" <exp-logico-e> }
+
+<exp-logico-e> ::= <exp-igualdade> { "&&" <exp-igualdade> }
+
+<exp-igualdade> ::= <exp-relacional> { ("==" | "!=") <exp-relacional> }
+
+<exp-relacional> ::= <exp-soma> { ("<" | ">" | "<=" | ">=") <exp-soma> }
+
+<exp-soma> ::= <exp-mult> { ("+" | "-") <exp-mult> }
+
+<exp-mult> ::= <exp-unaria> { ("*" | "/") <exp-unaria> }
+
+<exp-unaria> ::= ("-" | "!") <exp-unaria> | <exp-primaria>
+
+<exp-primaria> ::= <numero>
+                 | <caractere>
+                 | <booleano>
+                 | <string>
+                 | <identificador>
+                 | "(" <expressao> ")"
+                 | <chamada-funcao>
+
+<tipo> ::= <tipo-primitivo>
+<tipo-primitivo> ::= "int" | "float" | "char" | "bool" | "string"
+
+<string> ::= "\"" <conteudo-string> "\""
+<conteudo-string> ::= { <caractere-string> }
+<caractere-string> ::= qualquer caractere exceto aspas duplas (") e quebras de linha
+
+<identificador> ::= <letra> { <letra> | <digito> | "_" }
+
+<numero> ::= <digito> { <digito> } [ "." <digito> { <digito> } ]
+<caractere> ::= "'" <letra> "'"
+<booleano> ::= "true" | "false"
+
+<letra> ::= "a" | ... | "z" | "A" | ... | "Z"
+<digito> ::= "0" | ... | "9"
