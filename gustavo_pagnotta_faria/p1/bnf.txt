@@ -1,0 +1,33 @@
+<programa> ::= <comeco> <pularLinha>* <corpo> <pularLinha>* <fim>
+
+<comeco> ::= "PROGRAMA \"" <label> "\":" <pularLinha> "INICIO" <pularLinha>
+<label> ::= <letra> (<letra> | [0-9])*
+<corpo> ::= (<linha_codigo> | <linha_vazia>)*
+
+<linha_codigo> ::= <espaco> <comando> <pularLinha>
+<linha_vazia>  ::= <espaco> <pularLinha>
+
+<comando> ::= <atribuicao> | <expressao>
+<atribuicao> ::= <label> <espaco> "=" <espaco> <expressao>
+
+<expressao> ::= <expressao_adicao>
+
+<expressao_adicao> ::= <expressao_multiplicacao>
+                        | <expressao_adicao> <espaco> "+" <espaco> <expressao_multiplicacao>
+                        | <expressao_adicao> <espaco> "-" <espaco> <expressao_multiplicacao>
+
+<expressao_multiplicacao> ::= <expressao_primaria>
+                              | <expressao_multiplicacao> <espaco> "*" <espaco> <expressao_primaria>
+                              | <expressao_multiplicacao> <espaco> "/" <espaco> <expressao_primaria>
+
+<expressao_primaria> ::= <valor> | "(" <espaco> <expressao> <espaco> ")"
+
+<valor> ::= <label> | (("-" | "+")? <numero>)
+<numero> ::= <espaco> ([1-9] [0-9]* | "0")
+
+<fim> ::= "FIM"
+
+<pularLinha> ::= <espaco> ("\n" | <comentario>)
+<comentario> ::= ";" (<letra> | [0-9] | <espaco>)* "\n"
+<letra> ::= [a-z] | [A-Z]
+<espaco> ::= (" " | "\t")*
